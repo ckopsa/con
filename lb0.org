@@ -1,0 +1,101 @@
+* Lab 0
+This lab is primarily intended to familiarize you with the "Take-1/Take-2"
+process that will be used for most of the labs in CS 460 this semester. You
+will:
+
+- Write your code and submit it in the Linux Lab.
+- Upload your code in this group discussion board.  This is the "Take-1" code.
+- Peer review your peer's code, give feedback and grade it through this discussion board.
+- Revise your "Take-1" code (at a minimum with the "Take-2" header) and submit your "Take-2" code in the Linux Lab.
+- Grade your peers on their participation in the peer review process.
+
+** Writing your code and submitting it in the Linux Lab
+The C++ program that you are to submit is to count the number of strings entered
+by the user at the command line that have the first letter of the first word
+capitalized before a blank line is entered by the user. See the sample output in
+the file associated with this I-Learn item to understand how the program must
+behave. Use the following .cpp file as a template for your code:
+   
+/home/cs460/labLab0/practiceLab.cpp
+ 
+Use the testBed to test your program:
+#+BEGIN_SRC sh
+  testBed cs460/lab0 yourFile.cpp
+#+END_SRC
+
+Style check your program with:
+#+BEGIN_SRC sh
+  styleChecker yourFile.cpp
+#+END_SRC
+[The BYU-Idaho style check will only be done for this lab, but all labs should use good style.]
+ 
+Submit your code in the Linux Lab through the use of the "submit" command. Execute the command line command:
+#+BEGIN_SRC sh
+  submit yourFileName.cpp
+#+END_SRC
+
+** Uploading your code in I-Learn for the peer review
+
+- Click on the title of this discussion board (Lab 0 Peer Review Discussion Board).
+- Click the "Start a New Thread" button (scroll down, or 'Hide Description' to see the button).
+- Enter a subject.  An example may be:  John Doe's Lab 0 Code
+- Choose one of the following options to post your "Take-1" code
+  - Use 'Add attachments' to attach a copy of your code to your posting.
+  - Paste a URL in the essay box that points to where your code resides.
+- Make sure 'Subscribe to this thread' is checked.
+- Click the 'Post' button.
+- Peer review your peers' code and provide feedback and grade it
+
+Once you have started a new thread that includes your code, or access to your
+code, you will be allowed to peer review the code from others in your peer
+review/debug group that have posted/uploaded their code. Test and review the
+code of the other members of your peer review/debug group. Provide feedback to
+the other members of your group through this discussion board. Additionally,
+give a grade to your peers' code using this rubric. Post the grade on the
+discussion board. Provide some assistance in debugging your peers' code, if
+necessary.
+
+To see who the members of your group are, go to the “Groups” menu item under the
+“More Tools” tab. Click on the link in the “Members” column that tells how many
+members there are in your group.
+
+** Submitting the "Take-2" in the Linux Lab
+
+Using the feedback given by your peers, revise your original code for the
+"Take-2" submission in the Linux Lab. You must submit your code a second time in
+the Linux Lab. This second submission goes to a take-2 directory and uses a
+header that has been revised from the one used for the first code submission.
+Even if you make no changes to what you submitted for the "Take-1," you must
+revise the header with a "T2" for the lab name and add the additional comment
+block (filled out) to your file.
+
+Grading Peers on their participation in the peer review process
+
+Complete the quiz/assessment associated with this lab that asks you to give a
+score, on a scale of 0 to 10, to yourself and your peers on their participation
+in the peer review work.
+
+#+BEGIN_SRC c++ :tangle lb0.cpp
+  /***********************************************************************
+   * Program:
+   *    Lab 00, Practice Lab Submission
+   *    Brother Jones, CS460
+   * Author:
+   *    name
+   * Summary:
+   *    Enter a brief description of your program here!  Please note that if
+   *    you do not take the time to fill out this block, YOU WILL LOSE POINTS.
+   ************************************************************************/
+
+  #include <iostream>
+  using namespace std;
+
+  /**********************************************************************
+   * Add text here to describe what the function "main" does. Also don't forget
+   * to fill this out with meaningful text or YOU WILL LOSE POINTS.
+   ***********************************************************************/
+  int main()
+  {
+    return 0;
+  }
+#+END_SRC
