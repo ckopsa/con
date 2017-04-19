@@ -77,69 +77,72 @@ Complete the quiz/assessment associated with this lab that asks you to give a
 score, on a scale of 0 to 10, to yourself and your peers on their participation
 in the peer review work.
 
+** Code
 #+BEGIN_SRC c++ :tangle lb0.cpp
   /***********************************************************************
-   ,* Program:
-   ,*    Lab 00, Practice Lab Submission
-   ,*    Brother Jones, CS460
-   ,* Author:
-   ,*    Colton Kopsa
-   ,* Summary:
-   ,*    Developed a program that counts the number of strings entered with the
-   ,*    first character being in uppercase.
-   ,************************************************************************/
-
+  ,* Program:
+  ,*    Lab 00, Practice Lab Submission
+  ,*    Brother Jones, CS460
+  ,* Author:
+  ,*    Colton Kopsa
+  ,* Summary:
+  ,*    Developed a program that counts the number of strings entered with the
+  ,*    first character being in uppercase.
+  ,************************************************************************/
+  
   #include <iostream>
   #include <string>
   using namespace std;
-
+  
   /**********************************************************************
-   ,* Displays prompt text and then returns user input
-   ,***********************************************************************/
+  ,* Displays prompt text and then returns user input
+  ,***********************************************************************/
   string prompt(string promptText)
   {
-    cout << promptText;
-    string response;
-    getline(cin, response);
-    return response;
+     cout << promptText;
+     string response;
+     getline(cin, response);
+     return response;
   }
-
+  
   /**********************************************************************
-   ,* Displays proper text based of the number of string with the starting
-   ,* character being in uppercase.
-   ,***********************************************************************/
+  ,* Displays proper text based of the number of string with the starting
+  ,* character being in uppercase.
+  ,***********************************************************************/
   void displayUppercaseStringCount(int uppercaseStringCount)
   {
-    switch(uppercaseStringCount)
-      {
-      case 0 :
-        cout << "No strings starting with an upper case letter were seen.\n";
-        break;
-      case 1 :
-        cout << "One string starting with an upper case letter was seen.\n";
-        break;
-      default :
-        cout << "You entered " << uppercaseStringCount << " strings that started with an upper case letter.\n";
-        break;
-      }
+     switch (uppercaseStringCount)
+     {
+        case 0 :
+           cout << "No strings starting with an upper case letter were seen.\n";
+           break;
+        case 1 :
+           cout << "One string starting with an upper case letter was seen.\n";
+           break;
+        default :
+           cout << "You entered " << uppercaseStringCount 
+              << " strings that started with an upper case letter.\n";
+           break;
+     }
   }
-
+  
   /**********************************************************************
-   ,* Continues to prompt until empty string is encountered. Increments counter
-   ,* when first letter of string is uppercase.
-   ,***********************************************************************/
+  ,* Continues to prompt until empty string is encountered. Increments counter
+  ,* when first letter of string is uppercase.
+  ,***********************************************************************/
   int main()
   {
-    int uppercaseString = 0;
-    string response;
-    do
-      {
+     int uppercaseString = 0;
+     string response;
+     do
+     {
         response = prompt("Enter a string: ");
         if (isupper(response[0]))
-          ++uppercaseString;
-      }
-    while (response != "");
-    displayUppercaseStringCount(uppercaseString);
-    return 0;
+           ++uppercaseString;
+     }
+     while (response != "");
+     displayUppercaseStringCount(uppercaseString);
+     return 0;
   }
 #+END_SRC
+
