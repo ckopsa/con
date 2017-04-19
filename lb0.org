@@ -36,15 +36,21 @@ Submit your code in the Linux Lab through the use of the "submit" command. Execu
 
 ** Uploading your code in I-Learn for the peer review
 
-- Click on the title of this discussion board (Lab 0 Peer Review Discussion Board).
-- Click the "Start a New Thread" button (scroll down, or 'Hide Description' to see the button).
-- Enter a subject.  An example may be:  John Doe's Lab 0 Code
+- Click on the title of this discussion board (Lab 0 Peer Review Discussion
+  Board).
+- Click the "Start a New Thread" button (scroll down, or 'Hide Description' to
+  see the button).
+- Enter a subject. An example may be: John Doe's Lab 0 Code
 - Choose one of the following options to post your "Take-1" code
   - Use 'Add attachments' to attach a copy of your code to your posting.
   - Paste a URL in the essay box that points to where your code resides.
 - Make sure 'Subscribe to this thread' is checked.
 - Click the 'Post' button.
 - Peer review your peers' code and provide feedback and grade it
+
+To see who the members of your group are, go to the “Groups” menu item under the
+“More Tools” tab. Click on the link in the “Members” column that tells how many
+members there are in your group.
 
 Once you have started a new thread that includes your code, or access to your
 code, you will be allowed to peer review the code from others in your peer
@@ -54,10 +60,6 @@ the other members of your group through this discussion board. Additionally,
 give a grade to your peers' code using this rubric. Post the grade on the
 discussion board. Provide some assistance in debugging your peers' code, if
 necessary.
-
-To see who the members of your group are, go to the “Groups” menu item under the
-“More Tools” tab. Click on the link in the “Members” column that tells how many
-members there are in your group.
 
 ** Submitting the "Take-2" in the Linux Lab
 
@@ -77,25 +79,67 @@ in the peer review work.
 
 #+BEGIN_SRC c++ :tangle lb0.cpp
   /***********************************************************************
-   * Program:
-   *    Lab 00, Practice Lab Submission
-   *    Brother Jones, CS460
-   * Author:
-   *    name
-   * Summary:
-   *    Enter a brief description of your program here!  Please note that if
-   *    you do not take the time to fill out this block, YOU WILL LOSE POINTS.
-   ************************************************************************/
+   ,* Program:
+   ,*    Lab 00, Practice Lab Submission
+   ,*    Brother Jones, CS460
+   ,* Author:
+   ,*    Colton Kopsa
+   ,* Summary:
+   ,*    Developed a program that counts the number of strings entered with the
+   ,*    first character being in uppercase.
+   ,************************************************************************/
 
   #include <iostream>
+  #include <string>
   using namespace std;
 
   /**********************************************************************
-   * Add text here to describe what the function "main" does. Also don't forget
-   * to fill this out with meaningful text or YOU WILL LOSE POINTS.
-   ***********************************************************************/
+   ,* Displays prompt text and then returns user input
+   ,***********************************************************************/
+  string prompt(string promptText)
+  {
+    cout << promptText;
+    string response;
+    getline(cin, response);
+    return response;
+  }
+
+  /**********************************************************************
+   ,* Displays proper text based of the number of string with the starting
+   ,* character being in uppercase.
+   ,***********************************************************************/
+  void displayUppercaseStringCount(int uppercaseStringCount)
+  {
+    switch(uppercaseStringCount)
+      {
+      case 0 :
+        cout << "No strings starting with an upper case letter were seen.\n";
+        break;
+      case 1 :
+        cout << "One string starting with an upper case letter was seen.\n";
+        break;
+      default :
+        cout << "You entered " << uppercaseStringCount << " strings that started with an upper case letter.\n";
+        break;
+      }
+  }
+
+  /**********************************************************************
+   ,* Continues to prompt until empty string is encountered. Increments counter
+   ,* when first letter of string is uppercase.
+   ,***********************************************************************/
   int main()
   {
+    int uppercaseString = 0;
+    string response;
+    do
+      {
+        response = prompt("Enter a string: ");
+        if (isupper(response[0]))
+          ++uppercaseString;
+      }
+    while (response != "");
+    displayUppercaseStringCount(uppercaseString);
     return 0;
   }
 #+END_SRC
