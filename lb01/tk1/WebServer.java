@@ -5,7 +5,9 @@
  * Author:
  *    Colton Kopsa
  * Summary:
- *    This program ...
+ *    Creates a webserver that handles only GET requests. It can only return
+ *    file types: .txt .jpeg/jpg .html/htm .gif
+ *     
  ************************************************************************** */
 /*** NOTE: The header needs to be changed for second submission (take 2) ***/
 /*** NOTE: The header needs to be changed for second submission (take 2) ***/
