@@ -1,0 +1,3 @@
+Br. Jones had us build a web-server... and it makes me more than happy.
+
+I'm glad I finally get to understand how some of the lower level workings of the internet operate.
