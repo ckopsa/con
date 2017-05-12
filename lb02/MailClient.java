@@ -385,7 +385,7 @@ class SMTPConnection
            sendCommand() to do the dirty work. Do _not_ catch the
            exception thrown from sendCommand(). */
         sendCommand("MAIL FROM: " + envelope.Sender + CRLF, 250);
-        sendCommand("ReCIPIENT TO: " + envelope.Recipient + CRLF, 250);
+        sendCommand("RCPT TO: " + envelope.Recipient + CRLF, 250);
         sendCommand("DATA" + CRLF, 354);
     }
 
@@ -416,7 +416,7 @@ class SMTPConnection
     {
         /* Write command to server and read reply from server. */
         System.out.println("Command to server: " + command + CRLF);
-        toServer.writeBytes(command + CRLF);
+        toServer.writeBytes(command);
 
         /* Check that the server's reply code is the same as the
            parameter rc. If not, throw an IOException. */
