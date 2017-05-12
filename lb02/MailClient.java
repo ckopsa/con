@@ -387,6 +387,7 @@ class SMTPConnection
         sendCommand("MAIL FROM: " + envelope.Sender + CRLF, 250);
         sendCommand("RCPT TO: " + envelope.Recipient + CRLF, 250);
         sendCommand("DATA" + CRLF, 354);
+        sendCommand(envelope.Message + CRLF + "." + CRLF, 354);
     }
 
     /**
