@@ -367,7 +367,7 @@ class SMTPConnection
 
         /* SMTP handshake. We need the name of the local machine.
            Send the appropriate SMTP handshake command. */
-        String localhost = "127.0.0.1";
+        String localhost = System.getProperty("user.name");
         System.out.println("LOCALHOST: " + localhost);
         sendCommand( "HELO " + localhost + CRLF, 250);
 
@@ -387,7 +387,7 @@ class SMTPConnection
         sendCommand("MAIL FROM: " + envelope.Sender + CRLF, 250);
         sendCommand("RCPT TO: " + envelope.Recipient + CRLF, 250);
         sendCommand("DATA" + CRLF, 354);
-        sendCommand(envelope.Message + CRLF + "." + CRLF, 354);
+        sendCommand(envelope.Message + CRLF + "." + CRLF, 250);
     }
 
     /**
