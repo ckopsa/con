@@ -5,8 +5,8 @@
  * Author:
  *    Colton Kopsa
  * Summary:
- *    This program ...
- ************************************************************************** */
+ *    This program is a mail client that works over SMTP
+ ***************************************************************************/
 
 import java.net.*;
 import java.io.*;
@@ -18,8 +18,7 @@ import java.text.*;
 /**
  * A simple mail client with a GUI for sending mail.
  */
-public class MailClient extends Frame
-{
+public class MailClient extends Frame {
     /* The stuff for the GUI. */
     private Button btSend = new Button("Send");
     private Button btClear = new Button("Clear");
@@ -37,9 +36,8 @@ public class MailClient extends Frame
      * Create a new MailClient window with fields for entering all
      * the relevant information (From, To, Subject, and message).
      */
-    public MailClient()
-    {
-        super ("Java Mailclient");
+    public MailClient() {
+        super("Java Mailclient");
         /* Create panels for holding the fields. To make it look nice,
          *  create an extra panel for holding all the child panels. */
         Panel fromPanel = new Panel(new BorderLayout());
@@ -74,64 +72,53 @@ public class MailClient extends Frame
         setVisible(true);
     }
 
-    static public void main(String argv[])
-    {
+    static public void main(String argv[]) {
         new MailClient();
     }
 
     /* Handler for the Send-button. */
-    class SendListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent event)
-        {
+    class SendListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
             System.out.println("Sending mail");
             /* First, check that we have the sender and recipient. */
-            if ((fromField.getText()).equals(""))
-                {
-                    System.out.println("Need sender!");
-                    return;
-                }
-            if ((toField.getText()).equals(""))
-                {
-                    System.out.println("Need recipient!");
-                    return;
-                }
+            if ((fromField.getText()).equals("")) {
+                System.out.println("Need sender!");
+                return;
+            }
+            if ((toField.getText()).equals("")) {
+                System.out.println("Need recipient!");
+                return;
+            }
             /* Create the message */
             Message mailMessage = new Message(fromField.getText(),
-                                              toField.getText(),
-                                              subjectField.getText(),
-                                              messageText.getText());
+                    toField.getText(),
+                    subjectField.getText(),
+                    messageText.getText());
 
             /* Check that the message is valid, i.e., sender and
              *  recipient addresses look ok. */
-            if (!mailMessage.isValid())
-                {
-                    return;
-                }
+            if (!mailMessage.isValid()) {
+                return;
+            }
 
             /* Create the envelope, open the connection and try to
              *  Send the message. */
             Envelope envelope = new Envelope(mailMessage);
-            try
-                {
-                    SMTPConnection connection = new SMTPConnection(envelope);
-                    connection.send(envelope);
-                    connection.close();
-                }
-            catch (IOException error)
-                {
-                    System.out.println("Sending failed: " + error);
-                    return;
-                }
+            try {
+                SMTPConnection connection = new SMTPConnection(envelope);
+                connection.send(envelope);
+                connection.close();
+            } catch (IOException error) {
+                System.out.println("Sending failed: " + error);
+                return;
+            }
             System.out.println("Mail sent successfully!");
         }
     }
 
     /* Clear the fields on the GUI. */
-    class ClearListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
+    class ClearListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
             System.out.println("Clearing fields");
             fromField.setText("");
             toField.setText("");
@@ -141,10 +128,8 @@ public class MailClient extends Frame
     }
 
     /* Quit. */
-    class QuitListener implements ActionListener
-    {
-        public void actionPerformed(ActionEvent e)
-        {
+    class QuitListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
     }
@@ -153,8 +138,7 @@ public class MailClient extends Frame
 /**
  * Mail message.
  */
-class Message
-{
+class Message {
     /* The headers and the body of the message. */
     public String Headers;
     public String Body;
@@ -171,8 +155,7 @@ class Message
      * Create the message object by inserting the required headers
      * from RFC 822 (From, To, Date).
      */
-    public Message(String from, String to, String subject, String text)
-    {
+    public Message(String from, String to, String subject, String text) {
         /* Remove whitespace */
         From = from.trim();
         To = to.trim();
@@ -182,7 +165,7 @@ class Message
         /* A close approximation of the required format. Unfortunately
          *  only GMT. */
         SimpleDateFormat format =
-            new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+                new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
         String dateString = format.format(new Date());
         Headers += "Date: " + dateString + CRLF;
         Body = text;
@@ -191,16 +174,14 @@ class Message
     /**
      * Getter for the From string of the message header
      */
-    public String getFrom()
-    {
+    public String getFrom() {
         return From;
     }
 
     /**
      * Getter for the To string of the message header
      */
-    public String getTo()
-    {
+    public String getTo() {
         return To;
     }
 
@@ -208,38 +189,32 @@ class Message
      * Check whether the message is valid. In other words, check that
      * both sender and recipient contain only one @-sign.
      */
-    public boolean isValid()
-    {
+    public boolean isValid() {
         int fromat = From.indexOf('@');
         int toat = To.indexOf('@');
-        if (fromat < 1 || (From.length() - fromat) <= 1)
-            {
-                System.out.println("Sender address is invalid");
-                return false;
-            }
-        if (toat < 1 || (To.length() - toat) <= 1)
-            {
-                System.out.println("Recipient address is invalid");
-                return false;
-            }
-        if (fromat != From.lastIndexOf('@'))
-            {
-                System.out.println("Sender address is invalid");
-                return false;
-            }
-        if (toat != To.lastIndexOf('@'))
-            {
-                System.out.println("Recipient address is invalid");
-                return false;
-            }
+        if (fromat < 1 || (From.length() - fromat) <= 1) {
+            System.out.println("Sender address is invalid");
+            return false;
+        }
+        if (toat < 1 || (To.length() - toat) <= 1) {
+            System.out.println("Recipient address is invalid");
+            return false;
+        }
+        if (fromat != From.lastIndexOf('@')) {
+            System.out.println("Sender address is invalid");
+            return false;
+        }
+        if (toat != To.lastIndexOf('@')) {
+            System.out.println("Recipient address is invalid");
+            return false;
+        }
         return true;
     }
 
     /**
-     *For printing the message.
+     * For printing the message.
      */
-    public String toString()
-    {
+    public String toString() {
         String res;
         res = Headers + CRLF;
         res += Body;
@@ -247,12 +222,10 @@ class Message
     }
 }
 
-
 /**
  * SMTP envelope for one mail message.
  */
-class Envelope
-{
+class Envelope {
     /* SMTP-sender of the message (in this case, contents of
        From-header. */
     public String Sender;
@@ -267,8 +240,7 @@ class Envelope
     /**
      * Creates the envelope.
      */
-    public Envelope(Message message)
-    {
+    public Envelope(Message message) {
         /* Get sender and recipient. */
         Sender = message.getFrom();
         Recipient = message.getTo();
@@ -281,16 +253,13 @@ class Envelope
         int atsign = Recipient.lastIndexOf('@');
         DestHost = Recipient.substring(atsign + 1);
         /* Map the name into an IP-address */
-        try
-            {
-                DestAddr = InetAddress.getByName(DestHost);
-            }
-        catch (UnknownHostException e)
-            {
-                System.out.println("Unknown host: " + DestHost);
-                System.out.println(e);
-                return;
-            }
+        try {
+            DestAddr = InetAddress.getByName(DestHost);
+        } catch (UnknownHostException e) {
+            System.out.println("Unknown host: " + DestHost);
+            System.out.println(e);
+            return;
+        }
         return;
     }
 
@@ -298,20 +267,17 @@ class Envelope
      * Escapes the message by doubling all periods at the beginning of
      * a line.
      */
-    private Message escapeMessage(Message message)
-    {
+    private Message escapeMessage(Message message) {
         String escapedBody = "";
         String token;
         StringTokenizer parser = new StringTokenizer(message.Body, "\n", true);
-        while (parser.hasMoreTokens())
-            {
-                token = parser.nextToken();
-                if (token.startsWith("."))
-                    {
-                        token = "." + token;
-                    }
-                escapedBody += token;
+        while (parser.hasMoreTokens()) {
+            token = parser.nextToken();
+            if (token.startsWith(".")) {
+                token = "." + token;
             }
+            escapedBody += token;
+        }
         message.Body = escapedBody;
         return message;
     }
@@ -319,8 +285,7 @@ class Envelope
     /**
      * For printing the envelope. Only for debug.
      */
-    public String toString()
-    {
+    public String toString() {
         String res = "Sender: " + Sender + '\n';
         res += "Recipient: " + Recipient + '\n';
         res += "MX-host: " + DestHost + ", address: " + DestAddr + '\n';
@@ -333,8 +298,7 @@ class Envelope
 /**
  * Open an SMTP connection to a remote machine and send one mail.
  */
-class SMTPConnection
-{
+class SMTPConnection {
     /* The socket to the server */
     private Socket connection;
     /* Streams for reading and writing the socket */
@@ -349,8 +313,7 @@ class SMTPConnection
      * Create an SMTPConnection object. Create the socket and the
      * associated streams. Initialize SMTP connection.
      */
-    public SMTPConnection(Envelope envelope) throws IOException
-    {
+    public SMTPConnection(Envelope envelope) throws IOException {
         System.out.println(envelope.DestAddr);
         connection = new Socket(envelope.DestAddr, SMTP_PORT);
         fromServer = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -369,7 +332,7 @@ class SMTPConnection
            Send the appropriate SMTP handshake command. */
         String localhost = System.getProperty("user.name");
         System.out.println("LOCALHOST: " + localhost);
-        sendCommand( "HELO " + localhost + CRLF, 250);
+        sendCommand("HELO " + localhost + CRLF, 250);
 
         isConnected = true;
     }
@@ -379,8 +342,7 @@ class SMTPConnection
      * correct order. No checking for errors, just throw them to the
      * caller.
      */
-    public void send(Envelope envelope) throws IOException
-    {
+    public void send(Envelope envelope) throws IOException {
         /* Send all the necessary commands to send a message. Call
            sendCommand() to do the dirty work. Do _not_ catch the
            exception thrown from sendCommand(). */
@@ -394,27 +356,22 @@ class SMTPConnection
      * Close the connection. First, terminate on SMTP level, then
      * close the socket.
      */
-    public void close()
-    {
+    public void close() {
         isConnected = false;
-        try
-            {
-                sendCommand("QUIT" + CRLF, 221);
-                connection.close();
-            }
-        catch (IOException e)
-            {
-                System.out.println("Unable to close connection: " + e);
-                isConnected = true;
-            }
+        try {
+            sendCommand("QUIT" + CRLF, 221);
+            connection.close();
+        } catch (IOException e) {
+            System.out.println("Unable to close connection: " + e);
+            isConnected = true;
+        }
     }
 
     /**
      * Send an SMTP command to the server. Check that the reply code
      * is what is is supposed to be according to RFC 821.
      */
-    private void sendCommand(String command, int rc) throws IOException
-    {
+    private void sendCommand(String command, int rc) throws IOException {
         /* Write command to server and read reply from server. */
         System.out.println("Command to server: " + command + CRLF);
         toServer.writeBytes(command);
@@ -433,9 +390,8 @@ class SMTPConnection
     /**
      * Parse the reply line from the server. Returns the reply code.
      */
-    private int parseReply(String reply)
-    {
-        StringTokenizer token = new StringTokenizer(reply," ");
+    private int parseReply(String reply) {
+        StringTokenizer token = new StringTokenizer(reply, " ");
         int code = Integer.parseInt(token.nextToken());
         return code;
     }
@@ -443,12 +399,10 @@ class SMTPConnection
     /**
      * Destructor. Closes the connection if something bad happens.
      */
-    protected void finalize() throws Throwable
-    {
-        if (isConnected)
-            {
-                close();
-            }
-        super.finalize ();
+    protected void finalize() throws Throwable {
+        if (isConnected) {
+            close();
+        }
+        super.finalize();
     }
 }
