@@ -1,13 +1,15 @@
 /****************************************************************************
  * Program:
- *    Lab MailClient, Computer Communication and Networking
+ *    Lab MailClientT2, Computer Communication and Networking
  *    Brother Jones, CS 460
  * Author:
  *    Colton Kopsa
  * Summary:
  *    This program is a mail client that works over SMTP
- ***************************************************************************/
-
+ ***************************************************************************
+* Changes made to my code for the re-submission:
+*  - Updated comments for take-2
+*****************************************************************************/
 import java.net.*;
 import java.io.*;
 import java.util.*;
