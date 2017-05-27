@@ -4,7 +4,7 @@
 ** This is a modified of code from http://beej.us/guide/bgnet/
 ** The code was modified to take out the "fork" to start a new process and
 ** the signal handler.
-**  
+**
 ** It was modified to partly conform to BYU-Idaho style.
 */
 
@@ -19,6 +19,8 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <sys/wait.h>
+#include <iostream>
+#include <string>
 //  #include <signal.h>
 
 #define PORT "3490"  // the port users will be connecting to
@@ -43,7 +45,8 @@ int main(void)
   int numbytes;
   char buf[MAXDATASIZE];
    int sockfd;      // listen on sock_fd
-   int new_fd;      // new connection on new_fd
+   int p1_fd;      // new connection on new_fd
+   int p2_fd;      // new connection on new_fd
    struct addrinfo hints;
    struct addrinfo *servinfo;
    struct addrinfo *p;
@@ -108,11 +111,12 @@ int main(void)
 
    printf("server: waiting for connections...\n");
 
-   while(1)    // main accept() loop
+   std::string player1 = "";
+   while(player1 == "")    // main accept() loop
    {
       sin_size = sizeof their_addr;
-      new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
-      if (new_fd == -1)
+      p1_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+      if (p1_fd == -1)
       {
          perror("accept");
          continue;
@@ -124,22 +128,59 @@ int main(void)
       printf("server: got connection from %s\n", s);
 
       //reads from client.
-      if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1)
+      if ((numbytes = recv(p1_fd, buf, MAXDATASIZE-1, 0)) == -1)
         {
           perror("recv");
           exit(1);
         }
 
       buf[numbytes] = '\0';
-
+      player1 = buf;
       printf("server: received '%s'\n",buf);
 
       //sends to client.
-      if (send(new_fd, "Hello, world!", 13, 0) == -1)
-         perror("send");
-      close(new_fd);
+      // if (send(p1_fd, "Waiting for player 2", 20, 0) == -1)
+      //   perror("send");
    }
 
+   std::string player2 = "";
+   while(player2 == "")    // main accept() loop
+     {
+       sin_size = sizeof their_addr;
+       p2_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+       if (p2_fd == -1)
+         {
+           perror("accept");
+           continue;
+         }
+
+       inet_ntop(their_addr.ss_family,
+                 get_in_addr((struct sockaddr *)&their_addr),
+                 s, sizeof s);
+       printf("server: got connection from %s\n", s);
+
+       //reads from client.
+       if ((numbytes = recv(p2_fd, buf, MAXDATASIZE-1, 0)) == -1)
+         {
+           perror("recv");
+           exit(1);
+         }
+
+       buf[numbytes] = '\0';
+
+       printf("server: received '%s'\n",buf);
+       player2 = buf;
+
+       //sends to client.
+       //if (send(p2_fd, "Getting results!", 16, 0) == -1)
+       //  perror("send");
+       std::string results = player1 + player2;
+       if (send(p2_fd, results.c_str(), results.length(), 0) == -1)
+         perror("send");
+       if (send(p1_fd, results.c_str(), results.length(), 0) == -1)
+         perror("send");
+       close(p1_fd);
+       close(p2_fd);
+     }
    return 0;
 }
-
