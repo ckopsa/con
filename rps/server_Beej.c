@@ -25,6 +25,8 @@
 
 #define BACKLOG 10   // how many pending connections queue will hold
 
+#define MAXDATASIZE 100 // max number of bytes we can get at once
+
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
 {
@@ -38,6 +40,8 @@ void *get_in_addr(struct sockaddr *sa)
 
 int main(void)
 {
+  int numbytes;
+  char buf[MAXDATASIZE];
    int sockfd;      // listen on sock_fd
    int new_fd;      // new connection on new_fd
    struct addrinfo hints;
@@ -115,10 +119,22 @@ int main(void)
       }
 
       inet_ntop(their_addr.ss_family,
-         get_in_addr((struct sockaddr *)&their_addr),
-         s, sizeof s);
+                get_in_addr((struct sockaddr *)&their_addr),
+                s, sizeof s);
       printf("server: got connection from %s\n", s);
 
+      //reads from client.
+      if ((numbytes = recv(new_fd, buf, MAXDATASIZE-1, 0)) == -1)
+        {
+          perror("recv");
+          exit(1);
+        }
+
+      buf[numbytes] = '\0';
+
+      printf("server: received '%s'\n",buf);
+
+      //sends to client.
       if (send(new_fd, "Hello, world!", 13, 0) == -1)
          perror("send");
       close(new_fd);

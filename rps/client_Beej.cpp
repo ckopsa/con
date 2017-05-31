@@ -14,7 +14,8 @@
 #include <sys/types.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-
+#include <iostream>
+#include <string>
 #include <arpa/inet.h>
 
 #define PORT "3490" // the port client will be connecting to
@@ -53,7 +54,8 @@ int main(int argc, char *argv[])
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 
-  while (1)
+  std::string userInput = "";
+  while (userInput != "quit")
     {
       if ((rv = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0)
         {
@@ -93,6 +95,9 @@ int main(int argc, char *argv[])
 
       freeaddrinfo(servinfo); // all done with this structure
 
+      std::cin >> userInput;
+      if (send(sockfd, userInput.c_str(), userInput.length(), 0) == -1)
+        perror("send");
       if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1)
         {
           perror("recv");
