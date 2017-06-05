@@ -1,3 +1,15 @@
+/***********************************************************************
+ * Program:
+ *    Lab RockSrvT2, Rock/Paper/Scissors with Sockets - Server Code
+ *    Brother Jones, CS 460
+ * Author:
+ *    Colton Kopsa
+ * Summary:
+ *    A rock, paper, scissors game server for network gaming.
+ ***************************************************************************
+ * Changes made to my code for the re-submission:
+ *   - No changes were made
+ ************************************************************************/
 /*
 ** server.c -- a stream socket server demo
 **

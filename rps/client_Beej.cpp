@@ -1,3 +1,15 @@
+/***********************************************************************
+ * Program:
+ *    Lab RockClientT2, Rock/Paper/Scissors with Sockets - Client Code
+ *    Brother Jones, CS 460
+ * Author:
+ *    Colton Kopsa
+ * Summary:
+ *    Rock, paper, scissors client to connect to properly created RPS server
+ ***************************************************************************
+ * Changes made to my code for the re-submission:
+ *   - No changes were made
+ ***************************************************************************/
 /*
 ** client.c -- a stream socket client demo
 **
