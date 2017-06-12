@@ -34,6 +34,9 @@
 
 #define MAXDATASIZE 100 // max number of bytes we can get at once
 
+bool validInput(char playerInput);
+void computeRes(char player1, char player2);
+
 // get sockaddr, IPv4 or IPv6:
 void *get_in_addr(struct sockaddr *sa)
 {
@@ -49,7 +52,7 @@ int main(int argc, char *argv[])
 {
   int sockfd;
   int numbytes;
-  char buf[MAXDATASIZE];
+  char buf[MAXDATASIZE] = "";
   struct addrinfo hints;
   struct addrinfo *servinfo;
   struct addrinfo *p;
@@ -66,8 +69,8 @@ int main(int argc, char *argv[])
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
 
-  std::string userInput = "";
-  while (userInput != "quit")
+  std::string userInput;
+  while (userInput[0] != 'q' && buf[0] != 'q')
     {
       if ((rv = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0)
         {
@@ -106,21 +109,77 @@ int main(int argc, char *argv[])
       printf("client: connecting to %s\n", s);
 
       freeaddrinfo(servinfo); // all done with this structure
-
-      std::cin >> userInput;
-      if (send(sockfd, userInput.c_str(), userInput.length(), 0) == -1)
-        perror("send");
       if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1)
         {
           perror("recv");
           exit(1);
         }
-
-      buf[numbytes] = '\0';
-
       printf("client: received '%s'\n",buf);
-
+      std::cin >> userInput;
+      if (send(sockfd, userInput.c_str(), userInput.size(), 0) == -1)
+        perror("send");
+      do {
+        if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1)
+          {
+            perror("recv");
+            exit(1);
+          }
+        if (validInput(buf[0])) {
+          buf[numbytes] = '\0';
+          printf("client: received '%s'\n",buf);
+          computeRes(userInput[0], buf[0]);
+          break;
+        }
+      } while (true);
       close(sockfd);
     }
   return 0;
+}
+
+bool validInput(char playerInput) {
+  switch (tolower(playerInput)) {
+  case 'r':
+  case 'p':
+  case 's':
+  case 'q':
+    return true;
+  }
+  return false;
+}
+
+void computeRes(char player1, char player2) {
+  if (player2 == 'q') {
+    std::cout << "Your opponent quit. You win!" << std::endl;
+    return;
+  }
+  if (player1 == 'q') {
+    std::cout << "You quit. You lose!" << std::endl;
+    return;
+  }
+  switch (player1 - player2) {
+  case 0:
+    std::cout << "draw" << std::endl;
+    break;
+  case 'r' - 's':
+    std::cout << "win" << std::endl;
+    break;
+  case 'r' - 'p':
+    std::cout << "lose" << std::endl;
+    break;
+  case 's' - 'p':
+    std::cout << "win" << std::endl;
+    break;
+  case 's' - 'r':
+    std::cout << "lose" << std::endl;
+    break;
+  case 'p' - 's':
+    std::cout << "lose" << std::endl;
+    break;
+  case 'p' - 'r':
+    std::cout << "win" << std::endl;
+    break;
+  default:
+    std::cout << "error" << std::endl;
+    break;
+  }
 }
