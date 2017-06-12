@@ -34,7 +34,7 @@
 
 #define MAXDATASIZE 100 // max number of bytes we can get at once
 
-bool validInput(char playerInput);
+char validInput(char playerInput);
 void computeRes(char player1, char player2);
 
 // get sockaddr, IPv4 or IPv6:
@@ -115,36 +115,37 @@ int main(int argc, char *argv[])
           exit(1);
         }
       printf("client: received '%s'\n",buf);
+	while (true) {
       std::cin >> userInput;
-      if (send(sockfd, userInput.c_str(), userInput.size(), 0) == -1)
+	userInput[0] = validInput(userInput[0]);
+      if (send(sockfd, userInput.c_str(), 1, 0) == -1)
         perror("send");
-      do {
         if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1)
           {
             perror("recv");
             exit(1);
           }
-        if (validInput(buf[0])) {
+        if (validInput(buf[0]) != 'q') {
           buf[numbytes] = '\0';
           printf("client: received '%s'\n",buf);
           computeRes(userInput[0], buf[0]);
-          break;
-        }
-      } while (true);
-      close(sockfd);
+        } else {
+break;
+}
     }
+}
+      close(sockfd);
   return 0;
 }
 
-bool validInput(char playerInput) {
+char validInput(char playerInput) {
   switch (tolower(playerInput)) {
   case 'r':
   case 'p':
   case 's':
-  case 'q':
-    return true;
+    return playerInput;
   }
-  return false;
+  return 'q';
 }
 
 void computeRes(char player1, char player2) {

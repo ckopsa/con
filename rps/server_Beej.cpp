@@ -33,7 +33,6 @@
 #include <sys/wait.h>
 #include <iostream>
 #include <string>
-#include <thread>
 //  #include <signal.h>
 
 #define PORT "3490"  // the port users will be connecting to
@@ -124,7 +123,7 @@ int main(void)
       exit(1);
     }
 
-  char welcomeString[100] = "Welcome to the NextGen Rock Paper Scissors!\0";
+  std::string welcomeString = "Welcome to the NextGen Rock Paper Scissors!\0";
   while (true)
     {
       printf("server: waiting for connections...\n");
@@ -154,19 +153,26 @@ int main(void)
         printf("server: got connection from %s\n", s);
       }
       //sends welcome string
-      if (send(p1_fd, welcomeString, 100, 0) == -1)
+      if (send(p1_fd, welcomeString.c_str(), welcomeString.size(), 0) == -1)
         perror("send");
-      if (send(p2_fd, welcomeString, 100, 0) == -1)
+      if (send(p2_fd, welcomeString.c_str(), welcomeString.size(), 0) == -1)
         perror("send");
-      std::thread player1(getPlayerInput, p1_fd, player1Input);
-      std::thread player2(getPlayerInput, p2_fd, player2Input);
+	while (true) {
+//      std::thread player1(getPlayerInput, p1_fd, player1Input);
+//      std::thread player2(getPlayerInput, p2_fd, player2Input);
+getPlayerInput( p2_fd, player2Input);
+getPlayerInput( p1_fd, player1Input);
 
-      player1.join();
-      player2.join();
-      if (send(p1_fd, player2Input, 100, 0) == -1)
+      //player1.join();
+      //player2.join();
+      if (send(p1_fd, player2Input, 1, 0) == -1)
         perror("send");
-      if (send(p2_fd, player1Input, 100, 0) == -1)
+      if (send(p2_fd, player1Input, 1, 0) == -1)
         perror("send");
+	if (player1Input[0] == 'q' || player2Input[0] == 'q')
+break;
+	
+}
       close(p1_fd);
       close(p2_fd);
       p1_fd = 0;
