@@ -54,7 +54,7 @@ void *get_in_addr(struct sockaddr *sa)
   return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
-int main(void)
+int main(int argc, char* argv[])
 {
   char player1Input[MAXDATASIZE] = "";
   char player2Input[MAXDATASIZE] = "";
@@ -76,7 +76,13 @@ int main(void)
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE; // use my IP
 
-  if ((rv = getaddrinfo(NULL, PORT, &hints, &servinfo)) != 0)
+  if (argc != 2)
+    {
+      fprintf(stderr,"usage: server port\n");
+      exit(1);
+    }
+
+  if ((rv = getaddrinfo(NULL, argv[1], &hints, &servinfo)) != 0)
     {
       fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
       return 1;

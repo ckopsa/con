@@ -30,8 +30,6 @@
 #include <string>
 #include <arpa/inet.h>
 
-#define PORT "3490" // the port client will be connecting to
-
 #define MAXDATASIZE 100 // max number of bytes we can get at once
 
 char validInput(char playerInput);
@@ -59,9 +57,10 @@ int main(int argc, char *argv[])
   int rv;
   char s[INET6_ADDRSTRLEN];
 
-  if (argc != 2)
+  if (argc != 3)
     {
       fprintf(stderr,"usage: client hostname\n");
+      fprintf(stderr,"usage: client port\n");
       exit(1);
     }
 
@@ -72,7 +71,7 @@ int main(int argc, char *argv[])
   std::string userInput;
   while (userInput[0] != 'q' && buf[0] != 'q')
     {
-      if ((rv = getaddrinfo(argv[1], PORT, &hints, &servinfo)) != 0)
+      if ((rv = getaddrinfo(argv[1], argv[2], &hints, &servinfo)) != 0)
         {
           fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(rv));
           return 1;
