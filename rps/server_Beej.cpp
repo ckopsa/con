@@ -129,7 +129,7 @@ int main(int argc, char* argv[])
       exit(1);
     }
 
-  std::string welcomeString = "Welcome to the NextGen Rock Paper Scissors!\0";
+  std::string welcomeString = "Welcome to Online Rock Paper Scissors!\0";
   while (true)
     {
       printf("server: waiting for connections...\n");
