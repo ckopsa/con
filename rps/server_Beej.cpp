@@ -157,22 +157,21 @@ int main(void)
         perror("send");
       if (send(p2_fd, welcomeString.c_str(), welcomeString.size(), 0) == -1)
         perror("send");
-	while (true) {
-//      std::thread player1(getPlayerInput, p1_fd, player1Input);
-//      std::thread player2(getPlayerInput, p2_fd, player2Input);
-getPlayerInput( p2_fd, player2Input);
-getPlayerInput( p1_fd, player1Input);
+      while (true) {
+        //      std::thread player1(getPlayerInput, p1_fd, player1Input);
+        //      std::thread player2(getPlayerInput, p2_fd, player2Input);
+        getPlayerInput( p2_fd, player2Input);
+        getPlayerInput( p1_fd, player1Input);
 
-      //player1.join();
-      //player2.join();
-      if (send(p1_fd, player2Input, 1, 0) == -1)
-        perror("send");
-      if (send(p2_fd, player1Input, 1, 0) == -1)
-        perror("send");
-	if (player1Input[0] == 'q' || player2Input[0] == 'q')
-break;
-	
-}
+        //player1.join();
+        //player2.join();
+        if (send(p1_fd, player2Input, 1, 0) == -1)
+          perror("send");
+        if (send(p2_fd, player1Input, 1, 0) == -1)
+          perror("send");
+        if (player1Input[0] == 'q' || player2Input[0] == 'q')
+          break;
+      }
       close(p1_fd);
       close(p2_fd);
       p1_fd = 0;

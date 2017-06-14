@@ -115,26 +115,28 @@ int main(int argc, char *argv[])
           exit(1);
         }
       printf("client: received '%s'\n",buf);
-	while (true) {
-      std::cin >> userInput;
-	userInput[0] = validInput(userInput[0]);
-      if (send(sockfd, userInput.c_str(), 1, 0) == -1)
-        perror("send");
+      while (true) {
+        std::cin >> userInput;
+        userInput[0] = validInput(userInput[0]);
+        if (send(sockfd, userInput.c_str(), 1, 0) == -1)
+          perror("send");
         if ((numbytes = recv(sockfd, buf, MAXDATASIZE-1, 0)) == -1)
           {
             perror("recv");
             exit(1);
           }
-        if (validInput(buf[0]) != 'q') {
+        if (validInput(buf[0]) != 'q' && validInput(userInput[0]) != 'q') {
           buf[numbytes] = '\0';
           printf("client: received '%s'\n",buf);
           computeRes(userInput[0], buf[0]);
-        } else {
-break;
-}
+        }
+        if (userInput[0] == 'q' || buf[0] == 'q') {
+          computeRes(userInput[0], buf[0]);
+          break;
+        }
+      }
     }
-}
-      close(sockfd);
+  close(sockfd);
   return 0;
 }
 
