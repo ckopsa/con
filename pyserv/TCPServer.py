@@ -12,6 +12,12 @@
 #       Run your Python program using:  python yourCode.py
 #
 #############################################################################
+#
+# Changes made to my code for the re-submission:
+#   - Fixed a print statement
+#
+#
+##############################################################################
 from socket import *
 import sys
 import os
@@ -34,7 +40,7 @@ serverPort = int(sys.argv[1]) if len(sys.argv) == 2 else 6789
 serverSocket = socket(AF_INET, SOCK_STREAM)
 serverSocket.bind(('', serverPort))
 serverSocket.listen(1)
-print "Server is running on port " + serverPort
+print "Server is running on port " + str(serverPort)
 
 CRLF = "\r\n"
 try:
