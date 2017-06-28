@@ -1,6 +1,6 @@
 #############################################################################
 # Program:
-#    Lab PythonWebServer, Computer Communication and Networking
+#    Lab PythonWebServerT2, Computer Communication and Networking
 #    Brother Jones, CS 460
 # Author:
 #    Colton Kopsa
