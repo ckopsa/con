@@ -1,0 +1,16 @@
+1. Open this git repository in Android Studio:
+   https://github.com/coljamkop/BluetoothExample
+2. Install to Bluetooth capable Android device
+3. This will download a zip containing an example Android application I used to
+   test my application:
+   https://developer.android.com/downloads/samples/BluetoothChat.zip
+4. Install this to a separate Android device, using Android Studio.
+5. Pair both devices together, ensuring they are the only devices currently
+   paired on either device.
+6. Open the example test Application on one device (may need to make device
+   discoverable via Bluetooth).
+7. Open my application on the other device.
+8. It should automatically connect.
+9. Press the "Scan for Bluetooth Devices".
+10. If correctly configured, the test phone should receive a message from the
+    other phone (specifically, "Hey bro").
